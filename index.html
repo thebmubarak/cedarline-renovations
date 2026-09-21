@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cedarline Renovations — Austin Kitchen &amp; Outdoor Living</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          cream: '#F7F1E3',
+          cream2: '#EFE4CF',
+          sand: '#F0E0D2',
+          ink: '#221C17',
+          dark: { DEFAULT:'#201A14', light:'#2B241C', deep:'#17130F' },
+          orange: { DEFAULT:'#B23A2E', light:'#D9722D', dark:'#7E2A21' },
+          sage: { DEFAULT:'#7C8863', light:'#9DA982' },
+        },
+        fontFamily: {
+          display: ['Bricolage Grotesque','sans-serif'],
+          body: ['IBM Plex Sans','sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+<style>
+  html { scroll-behavior:smooth; }
+  body { background:#F7F1E3; color:#221C17; }
+  .tabular { font-variant-numeric: tabular-nums; }
+
+  .reveal { opacity:0; transform: translateY(20px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+  .reveal.is-visible { opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity:1; transform:none; transition:none; }
+    html { scroll-behavior:auto; }
+  }
+
+  .link-u { position:relative; display:inline-flex; align-items:center; gap:.55rem; }
+  .link-u .t { position:relative; padding-bottom:2px; }
+  .link-u .t::after {
+    content:''; position:absolute; left:0; right:0; bottom:0; height:1px;
+    background:currentColor; transform-origin:left; transition:transform .4s cubic-bezier(.16,1,.3,1);
+  }
+  .link-u:hover .t::after { transform:scaleX(1.08); }
+  .link-u svg { transition:transform .4s cubic-bezier(.16,1,.3,1); }
+  .link-u:hover svg { transform:translateX(6px); }
+
+  .btn-primary { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; background:#B23A2E; color:#fff; padding:.85rem 1.7rem; border-radius:10px; font-weight:500; font-size:.9rem; transition: background .3s ease; white-space:nowrap; }
+  .btn-primary:hover { background:#7E2A21; }
+  .btn-outline { display:inline-flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,.25); color:rgba(255,255,255,.9); padding:.8rem 1.6rem; border-radius:10px; font-size:.9rem; transition: border-color .3s ease, color .3s ease; }
+  .btn-outline:hover { border-color:#D9722D; color:#D9722D; }
+
+  .card { border-radius:16px; background:#F7F1E3; border:1px solid rgba(34,28,23,.10); }
+  .card-dark { border-radius:16px; background:#2B241C; border:1px solid rgba(255,255,255,.08); }
+
+  .photo { position:relative; overflow:hidden; background:#2B241C; border-radius:14px; }
+  .photo img, .photo video { width:100%; height:100%; object-fit:cover; display:block; transition:transform 1s cubic-bezier(.16,1,.3,1); }
+  .photo:hover img { transform:scale(1.04); }
+  .photo.dim::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(23,19,15,0) 35%, rgba(23,19,15,.75) 100%); pointer-events:none; }
+  .photo.tone img { filter: saturate(.85) contrast(1.05) brightness(.92); }
+  .photo.square { border-radius:20px; }
+  img.img-fallback-hide { display:none; }
+
+  input[type=range].bar { -webkit-appearance:none; appearance:none; width:100%; height:100%; background:transparent; position:absolute; inset:0; margin:0; cursor:ew-resize; z-index:30; }
+  input[type=range].bar::-webkit-slider-thumb { -webkit-appearance:none; width:56px; height:56px; opacity:0; }
+  input[type=range].bar::-moz-range-thumb { width:56px; height:56px; opacity:0; border:none; }
+
+  .star { color:#B23A2E; letter-spacing:2px; }
+  .grain { background-image: radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px); background-size:3px 3px; }
+  ::selection { background:#B23A2E; color:#fff; }
+  .fr:focus-visible { outline:2px solid #B23A2E; outline-offset:3px; }
+
+  #nav { transition: background-color .4s ease, box-shadow .4s ease; }
+  #nav.solid { background-color: rgba(23,19,15,.94); backdrop-filter: blur(6px); box-shadow:0 1px 0 rgba(255,255,255,.06); }
+
+  #mobileMenu { max-height:0; overflow:hidden; transition:max-height .4s ease; }
+  #mobileMenu.open { max-height:420px; }
+  .hbar { transition: transform .3s ease, opacity .3s ease; transform-origin:center; }
+  #menuBtn.open .hbar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  #menuBtn.open .hbar:nth-child(2) { opacity:0; }
+  #menuBtn.open .hbar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .faq-icon { transition: transform .35s ease; }
+  .faq-open .faq-icon { transform: rotate(45deg); }
+  .faq-panel { max-height:0; overflow:hidden; transition:max-height .4s ease; }
+
+  #stickyBar { transform: translateY(120%); transition: transform .5s cubic-bezier(.16,1,.3,1); }
+  #stickyBar.show { transform: translateY(0); }
+
+  .rev-viewport { width:100%; max-width:100%; overflow:hidden; }
+  #revTrackInner { display:flex; align-items:flex-start; width:100%; max-width:100%; transition: transform .5s cubic-bezier(.16,1,.3,1); }
+  .rev-slide { flex:0 0 100%; width:100%; max-width:100%; min-width:0; box-sizing:border-box; }
+  .rev-dot { width:7px; height:7px; border-radius:50%; background:rgba(34,28,23,.2); transition: background .3s ease, width .3s ease; }
+  .rev-dot.active { background:#B23A2E; width:20px; border-radius:4px; }
+  #portfolio .absolute.bottom-0 {
+    background-color: rgba(23,19,15,.85);
+    border-top-right-radius: 14px;
+  }
+  #portfolio .text-sage-light {
+color: #ffc;
+  }
+  #portfolio .text-xl {
+color: #fefeef;
+  }
+  footer p.text-center.text-xs {
+    padding-bottom:100px;
+  }
+</style>
+</head>
+<body class="font-body antialiased bg-cream">
+
+<!-- NAV -->
+<header id="nav" class="fixed top-0 inset-x-0 z-50 text-white">
+  <div class="max-w-7xl mx-auto px-6 sm:px-10 h-24 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-3 fr">
+      <img src="https://b-mubarak.rf.gd/wp-content/uploads/2026/09/cl2.png" alt="Cedarline Renovations" class=" object-contain" style="max-width:200px !important" onerror="this.remove()">
+      <!-- <span class="leading-none">
+        <span class="block font-display font-medium text-base tracking-wide">Cedarline</span>
+        <span class="block text-[9px] tracking-[0.25em] uppercase text-white/50">Renovations</span>
+      </span> -->
+    </a>
+    <nav class="hidden lg:flex items-center gap-9 text-sm text-white/75">
+      <a href="#about" class="hover:text-orange-light transition-colors fr">Who we are</a>
+      <a href="#portfolio" class="hover:text-orange-light transition-colors fr">Portfolio</a>
+      <a href="#expertise" class="hover:text-orange-light transition-colors fr">Services</a>
+      <a href="#process" class="hover:text-orange-light transition-colors fr">Process</a>
+      <a href="#faq" class="hover:text-orange-light transition-colors fr">FAQ</a>
+    </nav>
+    <div class="flex items-center gap-3">
+      <a href="#contact" class="hidden lg:inline-flex btn-primary fr">Contact us</a>
+      <button id="menuBtn" class="lg:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-[5px] fr" aria-label="Toggle menu" aria-expanded="false">
+        <span class="hbar block w-6 h-[2px] bg-white"></span>
+        <span class="hbar block w-6 h-[2px] bg-white"></span>
+        <span class="hbar block w-6 h-[2px] bg-white"></span>
+      </button>
+    </div>
+  </div>
+  <div id="mobileMenu" class="lg:hidden bg-dark-deep/98 backdrop-blur border-t border-white/10">
+    <nav class="flex flex-col px-6 py-6 gap-1 text-base">
+      <a href="#about" class="mobile-link py-3 border-b border-white/10 fr">Who we are</a>
+      <a href="#portfolio" class="mobile-link py-3 border-b border-white/10 fr">Portfolio</a>
+      <a href="#expertise" class="mobile-link py-3 border-b border-white/10 fr">Services</a>
+      <a href="#process" class="mobile-link py-3 border-b border-white/10 fr">Process</a>
+      <a href="#faq" class="mobile-link py-3 border-b border-white/10 fr">FAQ</a>
+      <a href="#contact" class="mobile-link btn-primary text-center mt-5 fr">Contact us</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="relative bg-dark-deep text-white overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.04] grain"></div>
+  <div class="relative max-w-7xl mx-auto px-6 sm:px-10 pt-[152px] pb-[100px] lg:pt-[180px] grid lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-16 items-center">
+    <div class="reveal">
+      <div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs text-white/70 mb-8">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange-light"></span>
+        Austin, Texas · Est. 2016
+      </div>
+      <h1 class="font-display font-medium text-[2.1rem] sm:text-5xl lg:text-[3.4rem] leading-[1.1] mb-7">
+        Rooted in craft, built for Texas living.
+      </h1>
+      <p class="text-white/65 text-base sm:text-lg leading-relaxed max-w-lg mb-10">
+        See a fixed price, a real timeline, and a 3D look at your finished kitchen or backyard — before we ever pick up a hammer.
+      </p>
+      <div class="flex flex-wrap items-center gap-x-8 gap-y-4 mb-10">
+        <a href="#contact" class="btn-primary fr">Book a Free Consultation</a>
+        <a href="#portfolio" class="link-u fr text-white/85 text-sm font-medium">
+          <span class="t">See Our Work</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg>
+        </a>
+      </div>
+      <div class="flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-white/55 pt-7 border-t border-white/10">
+        <span class="flex items-center gap-2"><span class="star text-sm">★★★★★</span> 5.0 · Google</span>
+        <span>60+ Projects</span>
+        <span>Licensed &amp; Insured</span>
+      </div>
+    </div>
+    <div class="reveal" style="transition-delay:.12s">
+      <div class="relative photo square aspect-[4/5] lg:aspect-[3/4] border border-white/10">
+        <video class="w-full h-full object-cover" autoplay muted loop playsinline poster="https://plus.unsplash.com/premium_photo-1733760124960-aa3e99826094?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGtpdGNoZW4lMjByZW1vZGVsJTIwYmVmb3JlJTIwYW5kJTIwYWZ0ZXJ8ZW58MHx8MHx8fDA%3D">
+          <source src="https://www.pexels.com/download/video/6474089/" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-gradient-to-t from-dark-deep/75 via-transparent to-transparent pointer-events-none"></div>
+        <div class="absolute bottom-5 left-5">
+          <span class="inline-flex items-center gap-2 rounded-full bg-dark-deep/85 backdrop-blur px-4 py-2 text-xs text-white/80">
+            <span class="w-1.5 h-1.5 rounded-full bg-orange-light"></span>
+            Built by hand, on site
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT / STATS -->
+<section id="about" class="bg-cream">
+  <div class="max-w-7xl mx-auto px-6 sm:px-10 py-[100px] grid lg:grid-cols-2 gap-16 items-center">
+    <div class="reveal photo aspect-[4/5]">
+      <img src="https://images.unsplash.com/photo-1600489000022-c2086d79f9d4?auto=format&fit=crop&w=1000&q=80"
+           onerror="this.parentElement.style.background='#2B241C'"
+           alt="Marble kitchen island with brass pendant lighting, finished Austin remodel">
+    </div>
+    <div class="reveal" style="transition-delay:.1s">
+      <div class="flex items-center gap-2.5 mb-5">
+        <span class="w-2 h-2 rounded-full bg-orange"></span>
+        <span class="text-ink/55 text-sm">About us</span>
+      </div>
+      <h2 class="font-display font-medium text-3xl sm:text-4xl leading-[1.15] mb-6 text-ink">A decade of craft, rooted right here in Austin.</h2>
+      <p class="text-ink/65 leading-relaxed mb-4">
+        Cedarline Renovations is an Austin kitchen and outdoor living specialist — 60+ projects built by a crew of 15 that treats your house like it's still yours the whole time we're in it.
+      </p>
+      <p class="text-ink/65 leading-relaxed mb-10">
+        No fluff, no jargon, no disappearing after the deposit clears. Just drawings you can actually picture, timelines we stick to, and a final walkthrough you're excited for.
+      </p>
+
+      <div class="grid grid-cols-3 gap-6 pb-8 mb-8 border-b border-ink/10">
+        <div>
+          <p class="font-display text-4xl tabular"><span class="counter" data-target="10">0</span>+</p>
+          <p class="text-xs text-ink/50 mt-1">Years experience</p>
+        </div>
+        <div>
+          <p class="font-display text-4xl tabular"><span class="counter" data-target="60">0</span>+</p>
+          <p class="text-xs text-ink/50 mt-1">Projects completed</p>
+        </div>
+        <div>
+          <p class="font-display text-4xl tabular"><span class="counter" data-target="15">0</span></p>
+          <p class="text-xs text-ink/50 mt-1">Team members</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-3 mb-9 text-xs text-ink/45">
+        <span>Google · 5.0★</span>
+        <span>Yelp · 4.9★</span>
+        <span>BBB A+ Accredited</span>
+        <span>Fully Licensed &amp; Insured</span>
+      </div>
+
+      <a href="#about" class="link-u fr font-medium text-ink">
+        <span class="t">More about us</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="bg-dark-deep text-white py-[100px]">
+  <div class="max-w-7xl mx-auto px-6 sm:px-10">
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-14 reveal">
+      <div class="flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-8">
+        <div class="flex items-center gap-2.5">
+          <span class="w-2 h-2 rounded-full bg-orange-light"></span>
+          <span class="text-white/55 text-sm">Selected work</span>
+        </div>
+        <h2 class="font-display font-medium text-3xl sm:text-4xl lg:text-[2.6rem] leading-[1.15]">Recent transformations around Austin.</h2>
+      </div>
+      <a href="#portfolio" class="link-u fr text-sm shrink-0">
+        <span class="t">View all projects</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg>
+      </a>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-5 reveal" style="transition-delay:.08s">
+      <div class="lg:row-span-2 photo dim tone aspect-[4/5] lg:aspect-auto">
+        <img src="https://plus.unsplash.com/premium_photo-1738779001849-2fcde92c271b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8b3V0ZG9vciUyMGtpdGNoZW58ZW58MHx8MHx8fDA%3D" onerror="this.parentElement.style.background='#2B241C'" alt="Zilker outdoor kitchen and covered patio">
+        <div class="absolute bottom-0 left-0 p-6">
+          <p class="text-[10px] uppercase tracking-[0.2em] text-sage-light mb-1">Outdoor living</p>
+          <p class="font-display text-xl">Zilker Outdoor Kitchen</p>
+        </div>
+      </div>
+      <div class="photo dim tone aspect-[4/3]">
+        <img src="https://images.unsplash.com/photo-1601760561441-16420502c7e0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8a2l0Y2hlbiUyMHJlbW9kZWx8ZW58MHx8MHx8fDA%3D" onerror="this.parentElement.style.background='#2B241C'" alt="Tarrytown kitchen remodel">
+        <div class="absolute bottom-0 left-0 p-5">
+          <p class="text-[10px] uppercase tracking-[0.2em] text-orange-light mb-1">Kitchen remodel</p>
+          <p class="font-display text-lg">Tarrytown Kitchen Refresh</p>
+        </div>
+      </div>
+      <div class="photo dim tone aspect-[4/3]">
+        <img src="https://images.unsplash.com/photo-1682888813913-e13f18692019?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8a2l0Y2hlbiUyMHJlbW9kZWx8ZW58MHx8MHx8fDA%3D" onerror="this.parentElement.style.background='#2B241C'" alt="Barton Hills kitchen counter remodel">
+        <div class="absolute bottom-0 left-0 p-5">
+          <p class="text-[10px] uppercase tracking-[0.2em] text-orange-light mb-1">Kitchen remodel</p>
+          <p class="font-display text-lg">Barton Hills Rebuild</p>
+        </div>
+      </div>
+      <div class="photo dim tone aspect-[4/3]">
+        <img src="https://plus.unsplash.com/premium_photo-1689609949905-0d27dac6c38e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8b3V0ZG9vciUyMHJlbW9kZWx8ZW58MHx8MHx8fDA%3D" onerror="this.parentElement.style.background='#2B241C'" alt="Westlake poolside patio and pergola">
+        <div class="absolute bottom-0 left-0 p-5">
+          <p class="text-[10px] uppercase tracking-[0.2em] text-sage-light mb-1">Outdoor living</p>
+          <p class="font-display text-lg">Westlake Poolside Patio</p>
+        </div>
+      </div>
+      <div class="photo dim tone aspect-[4/3]">
+        <img src="https://images.unsplash.com/photo-1501183638710-841dd1904471?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8aG9tZSUyMHJlbW9kZWxpbmd8ZW58MHx8MHx8fDA%3D" onerror="this.parentElement.style.background='#2B241C'" alt="Mueller open concept kitchen renovation">
+        <div class="absolute bottom-0 left-0 p-5">
+          <p class="text-[10px] uppercase tracking-[0.2em] text-white/60 mb-1">Full renovation</p>
+          <p class="font-display text-lg">Mueller Open-Concept</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="bg-cream py-[100px]">
+  <div class="max-w-5xl mx-auto px-6 sm:px-10 text-center mb-14 reveal">
+    <div class="flex items-center justify-center gap-2.5 mb-5">
+      <span class="w-2 h-2 rounded-full bg-orange"></span>
+      <span class="text-ink/55 text-sm">Concept to completion</span>
+    </div>
+    <h2 class="font-display font-medium text-3xl sm:text-4xl lg:text-[2.6rem] text-ink leading-[1.15]">Watch a kitchen come back to life.</h2>
+    <p class="text-ink/55 mt-4">Drag the handle to compare before and after.</p>
+  </div>
+  <div class="max-w-4xl mx-auto px-6 sm:px-10 reveal">
+    <div class="relative aspect-[16/10] overflow-hidden select-none border border-ink/10 rounded-[18px]" id="baSlider">
+      <div class="absolute inset-0 photo" style="border-radius:0">
+        <img src="https://images.unsplash.com/photo-1601760562234-9814eea6663a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8a2l0Y2hlbiUyMHJlbW9kZWwlMjBiZWZvcmUlMjBhbmQlMjBhZnRlcnxlbnwwfHwwfHx8MA%3D%3D" onerror="this.parentElement.style.background='#2B241C'" alt="Finished remodeled Austin kitchen">
+      </div>
+      <div class="absolute inset-0 photo" style="border-radius:0; clip-path: inset(0 50% 0 0);" id="baBefore">
+        <img src="https://plus.unsplash.com/premium_photo-1661295665154-34615f961f8c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8a2l0Y2hlbiUyMHJlbW9kZWwlMjBiZWZvcmUlMjBhbmQlMjBhZnRlcnxlbnwwfHwwfHx8MA%3D%3D" onerror="this.parentElement.style.background='#17130F'" class="grayscale contrast-125 brightness-75" alt="Kitchen mid-renovation with exposed framing">
+      </div>
+      <div class="absolute top-0 bottom-0 pointer-events-none z-20" id="baHandle" style="left:50%; transform:translateX(-50%);">
+        <div class="w-[2px] h-full bg-orange"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-orange flex items-center justify-center shadow-lg">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.6"><path d="M4 9h10M6 5l-4 4 4 4M12 5l4 4-4 4"/></svg>
+        </div>
+      </div>
+      <input type="range" min="0" max="100" value="50" class="bar" id="baInput" aria-label="Before and after comparison slider">
+      <span class="absolute top-4 left-4 text-[10px] uppercase tracking-[0.2em] bg-dark-deep/85 text-orange-light px-3 py-1 rounded-[6px] z-10">Before</span>
+      <span class="absolute top-4 right-4 text-[10px] uppercase tracking-[0.2em] bg-orange/90 text-white px-3 py-1 rounded-[6px] z-10">After</span>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE / SERVICES -->
+<section id="expertise" class="bg-cream2 py-[100px]">
+  <div class="max-w-7xl mx-auto px-6 sm:px-10">
+    <div class="flex flex-col lg:flex-row lg:items-end gap-6 lg:gap-10 mb-16 reveal">
+      <div class="flex items-center gap-2.5 lg:w-48 shrink-0">
+        <span class="w-2 h-2 rounded-full bg-orange"></span>
+        <span class="text-ink/55 text-sm">Our expertise</span>
+      </div>
+      <h2 class="font-display font-medium text-3xl sm:text-4xl lg:text-[2.6rem] text-ink leading-[1.15] max-w-2xl">The crafts we've built a whole company around.</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="reveal card p-7">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#D9722D" stroke-width="1.2" class="mb-6"><rect x="4" y="6" width="22" height="18" rx="3"/><line x1="4" y1="13" x2="26" y2="13"/><line x1="13" y1="13" x2="13" y2="24"/></svg>
+        <h3 class="font-display text-xl mb-2 text-ink">Kitchen Remodeling</h3>
+        <p class="text-ink/60 text-sm leading-relaxed mb-5">Layouts, cabinetry, and finishes designed around how you actually cook and gather.</p>
+        <a href="#contact" class="link-u fr text-sm font-medium text-ink"><span class="t">View details</span>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+      </div>
+      <div class="reveal card p-7" style="transition-delay:.06s">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#7C8863" stroke-width="1.2" class="mb-6"><rect x="6" y="10" width="18" height="12" rx="6"/><circle cx="15" cy="10" r="3"/></svg>
+        <h3 class="font-display text-xl mb-2 text-ink">Outdoor Kitchens</h3>
+        <p class="text-ink/60 text-sm leading-relaxed mb-5">Built-in grills, bars, and pizza ovens made for Texas entertaining.</p>
+        <a href="#contact" class="link-u fr text-sm font-medium text-ink"><span class="t">View details</span>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+      </div>
+      <div class="reveal card p-7" style="transition-delay:.12s">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#7C8863" stroke-width="1.2" class="mb-6"><path d="M4 16 15 6l11 10"/><path d="M7 14v10h16V14"/></svg>
+        <h3 class="font-display text-xl mb-2 text-ink">Patios &amp; Outdoor Living</h3>
+        <p class="text-ink/60 text-sm leading-relaxed mb-5">Covered patios, decks, and pergolas that stretch your living space outside.</p>
+        <a href="#contact" class="link-u fr text-sm font-medium text-ink"><span class="t">View details</span>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+      </div>
+      <div class="reveal card p-7" style="transition-delay:.18s">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#B23A2E" stroke-width="1.2" class="mb-6"><rect x="5" y="5" width="9" height="9" rx="2"/><rect x="16" y="5" width="9" height="9" rx="2"/><rect x="5" y="16" width="9" height="9" rx="2"/><rect x="16" y="16" width="9" height="9" rx="2"/></svg>
+        <h3 class="font-display text-xl mb-2 text-ink">Full Renovation</h3>
+        <p class="text-ink/60 text-sm leading-relaxed mb-5">Whole-home design/build from first sketch to final walkthrough.</p>
+        <a href="#contact" class="link-u fr text-sm font-medium text-ink"><span class="t">View details</span>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="bg-cream py-[100px]">
+  <div class="max-w-7xl mx-auto px-6 sm:px-10">
+    <div class="flex items-center justify-center gap-2.5 mb-5 reveal">
+      <span class="w-2 h-2 rounded-full bg-orange"></span>
+      <span class="text-ink/55 text-sm">How we work</span>
+    </div>
+    <h2 class="font-display font-medium text-3xl sm:text-4xl lg:text-[2.6rem] text-ink text-center mb-16 reveal">Four steps, zero surprises.</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="reveal card p-7">
+        <span class="flex items-center justify-center w-11 h-11 rounded-[10px] bg-orange/10 text-orange font-display text-lg mb-5">1</span>
+        <h3 class="font-medium text-ink text-lg mb-2">We listen</h3>
+        <p class="text-ink/60 text-sm leading-relaxed">A real conversation about how you live and what your home should feel like.</p>
+      </div>
+      <div class="reveal card p-7" style="transition-delay:.08s">
+        <span class="flex items-center justify-center w-11 h-11 rounded-[10px] bg-orange/10 text-orange font-display text-lg mb-5">2</span>
+        <h3 class="font-medium text-ink text-lg mb-2">We design</h3>
+        <p class="text-ink/60 text-sm leading-relaxed">Drawings and 3D renderings before a single wall comes down.</p>
+      </div>
+      <div class="reveal card p-7" style="transition-delay:.16s">
+        <span class="flex items-center justify-center w-11 h-11 rounded-[10px] bg-orange/10 text-orange font-display text-lg mb-5">3</span>
+        <h3 class="font-medium text-ink text-lg mb-2">We build</h3>
+        <p class="text-ink/60 text-sm leading-relaxed">Vetted subcontractors and updates you don't have to chase down.</p>
+      </div>
+      <div class="reveal card p-7" style="transition-delay:.24s">
+        <span class="flex items-center justify-center w-11 h-11 rounded-[10px] bg-orange/10 text-orange font-display text-lg mb-5">4</span>
+        <h3 class="font-medium text-ink text-lg mb-2">You love it</h3>
+        <p class="text-ink/60 text-sm leading-relaxed">A final walkthrough and a space that actually fits your life.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS CAROUSEL -->
+<section class="bg-sand py-[100px]">
+  <div class="max-w-6xl mx-auto px-6 sm:px-10 grid lg:grid-cols-[0.85fr_1.15fr] gap-14 items-center">
+    <div class="reveal photo aspect-[4/5]">
+      <img src="https://images.unsplash.com/photo-1544928879-7342a2f3ce42?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGtpdGNoZW4lMjByZW1vZGVsJTIwYmVmb3JlJTIwYW5kJTIwYWZ0ZXJ8ZW58MHx8MHx8fDA%3D" onerror="this.parentElement.style.background='#2B241C'" alt="Warm finished kitchen, Cedarline client project">
+    </div>
+    <div class="reveal min-w-0" style="transition-delay:.1s">
+      <div class="flex items-center gap-2.5 mb-5">
+        <span class="w-2 h-2 rounded-full bg-orange"></span>
+        <span class="text-ink/55 text-sm">Client reviews</span>
+      </div>
+      <div class="relative">
+        <div class="rev-viewport">
+          <div id="revTrackInner">
+            <div class="rev-slide">
+              <div class="card p-8">
+                <span class="star text-lg block mb-4">★★★★★</span>
+                <p class="font-display text-xl sm:text-2xl leading-snug text-ink mb-6">"We had a great experience from start to finish. We had ideas, but they made them come to life with drawings and 3D renderings — transparent throughout and timely with delivery."</p>
+                <p class="font-medium text-ink">Emily McDaniel</p>
+                <p class="text-ink/50 text-sm">Kitchen renovation · Austin, TX</p>
+              </div>
+            </div>
+            <div class="rev-slide">
+              <div class="card p-8">
+                <span class="star text-lg block mb-4">★★★★★</span>
+                <p class="font-display text-xl sm:text-2xl leading-snug text-ink mb-6">"Working with this team was the best decision we made. On time, on budget, and it looks incredible."</p>
+                <p class="font-medium text-ink">Sarah M.</p>
+                <p class="text-ink/50 text-sm">Outdoor kitchen · Austin, TX</p>
+              </div>
+            </div>
+            <div class="rev-slide">
+              <div class="card p-8">
+                <span class="star text-lg block mb-4">★★★★★</span>
+                <p class="font-display text-xl sm:text-2xl leading-snug text-ink mb-6">"They communicated every step, no guessing games. Our patio feels like a different house."</p>
+                <p class="font-medium text-ink">Julia K.</p>
+                <p class="text-ink/50 text-sm">Patio addition · Austin, TX</p>
+              </div>
+            </div>
+            <div class="rev-slide">
+              <div class="card p-8">
+                <span class="star text-lg block mb-4">★★★★★</span>
+                <p class="font-display text-xl sm:text-2xl leading-snug text-ink mb-6">"Honest pricing from day one, no change-order surprises. We'll be calling them again."</p>
+                <p class="font-medium text-ink">John H.</p>
+                <p class="text-ink/50 text-sm">Kitchen renovation · Austin, TX</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between mt-6">
+          <div class="flex gap-2" id="revDots"></div>
+          <div class="flex gap-3">
+            <button id="revPrev" class="w-10 h-10 rounded-[10px] border border-ink/15 flex items-center justify-center hover:border-orange hover:text-orange transition-colors fr" aria-label="Previous review">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3 5 8l5 5"/></svg>
+            </button>
+            <button id="revNext" class="w-10 h-10 rounded-[10px] border border-ink/15 flex items-center justify-center hover:border-orange hover:text-orange transition-colors fr" aria-label="Next review">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3l5 5-5 5"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="bg-cream py-[100px]">
+  <div class="max-w-3xl mx-auto px-6 sm:px-10">
+    <div class="flex items-center justify-center gap-2.5 mb-5 reveal">
+      <span class="w-2 h-2 rounded-full bg-orange"></span>
+      <span class="text-ink/55 text-sm">Frequently asked</span>
+    </div>
+    <h2 class="font-display font-medium text-3xl sm:text-4xl lg:text-[2.6rem] text-ink text-center mb-14 reveal">Questions homeowners actually ask.</h2>
+    <div class="space-y-3 reveal">
+      <div class="faq-item card">
+        <button class="faq-trigger w-full flex items-center justify-between text-left px-6 py-5 fr">
+          <span class="font-medium text-ink">How long does a typical renovation take?</span>
+          <svg class="faq-icon shrink-0 ml-4" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#B23A2E" stroke-width="1.6"><path d="M9 3v12M3 9h12"/></svg>
+        </button>
+        <div class="faq-panel px-6"><p class="text-ink/60 text-sm leading-relaxed pb-5">Most single-room remodels run 6 to 10 weeks once construction starts. We'll give you a real timeline during design, before you sign anything.</p></div>
+      </div>
+      <div class="faq-item card">
+        <button class="faq-trigger w-full flex items-center justify-between text-left px-6 py-5 fr">
+          <span class="font-medium text-ink">Do you handle permits and inspections?</span>
+          <svg class="faq-icon shrink-0 ml-4" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#B23A2E" stroke-width="1.6"><path d="M9 3v12M3 9h12"/></svg>
+        </button>
+        <div class="faq-panel px-6"><p class="text-ink/60 text-sm leading-relaxed pb-5">Yes, entirely. We pull every required permit and schedule inspections as part of the build.</p></div>
+      </div>
+      <div class="faq-item card">
+        <button class="faq-trigger w-full flex items-center justify-between text-left px-6 py-5 fr">
+          <span class="font-medium text-ink">Can you work within my budget?</span>
+          <svg class="faq-icon shrink-0 ml-4" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#B23A2E" stroke-width="1.6"><path d="M9 3v12M3 9h12"/></svg>
+        </button>
+        <div class="faq-panel px-6"><p class="text-ink/60 text-sm leading-relaxed pb-5">We design to a real number, not a wish list. Tell us your budget up front and we'll show you what's possible inside it.</p></div>
+      </div>
+      <div class="faq-item card">
+        <button class="faq-trigger w-full flex items-center justify-between text-left px-6 py-5 fr">
+          <span class="font-medium text-ink">What's included in your warranty?</span>
+          <svg class="faq-icon shrink-0 ml-4" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#B23A2E" stroke-width="1.6"><path d="M9 3v12M3 9h12"/></svg>
+        </button>
+        <div class="faq-panel px-6"><p class="text-ink/60 text-sm leading-relaxed pb-5">Every project is backed by a one-year craftsmanship warranty, plus manufacturer coverage on materials and appliances.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="contact" class="relative bg-dark-deep text-white py-[100px] overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6 sm:px-10 grid lg:grid-cols-2 gap-14 items-center">
+    <div class="reveal">
+      <div class="flex items-center gap-2.5 mb-5">
+        <span class="w-2 h-2 rounded-full bg-orange-light"></span>
+        <span class="text-white/55 text-sm">Ready when you are</span>
+      </div>
+      <h2 class="font-display font-medium text-3xl sm:text-4xl lg:text-[2.6rem] leading-[1.15] mb-6">Ready to transform your space?</h2>
+      <p class="text-white/60 leading-relaxed mb-9 max-w-md">Self-book your discovery call right now and find out what your Austin kitchen or backyard could look like.</p>
+      <a href="#" class="btn-primary fr">Book Free Consultation</a>
+    </div>
+    <div class="reveal photo dim tone aspect-[4/3]" style="transition-delay:.1s">
+      <img src="https://plus.unsplash.com/premium_photo-1733760124960-aa3e99826094?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGtpdGNoZW4lMjByZW1vZGVsJTIwYmVmb3JlJTIwYW5kJTIwYWZ0ZXJ8ZW58MHx8MHx8fDA%3D" onerror="this.parentElement.style.background='#2B241C'" alt="Finished open-concept Austin renovation">
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-dark-deep text-white/60 border-t border-white/10">
+  <div class="max-w-7xl mx-auto px-6 sm:px-10 py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <div>
+      <div class="flex items-center gap-3 mb-4">
+        <img src="https://b-mubarak.rf.gd/wp-content/uploads/2026/09/cl2.png" alt="Cedarline Renovations" class="object-contain" style="max-width:200px !important" onerror="this.remove()">
+        <!-- <span class="font-display font-medium text-base text-white">Cedarline Renovations</span>-->
+      </div>
+      <p class="text-sm leading-relaxed">An Austin design/build firm crafting kitchens and outdoor living spaces since 2016.</p>
+    </div>
+    <div>
+      <p class="text-[11px] uppercase tracking-[0.2em] text-white/35 mb-4">Quick links</p>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#about" class="hover:text-orange-light transition-colors">Who we are</a></li>
+        <li><a href="#portfolio" class="hover:text-orange-light transition-colors">Portfolio</a></li>
+        <li><a href="#expertise" class="hover:text-orange-light transition-colors">Services</a></li>
+        <li><a href="#contact" class="hover:text-orange-light transition-colors">Contact us</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="text-[11px] uppercase tracking-[0.2em] text-white/35 mb-4">Contact</p>
+      <ul class="space-y-2 text-sm">
+        <li>Austin, Texas</li>
+        <li>(512) 448-9021</li>
+        <li><a href="mailto:contact@cedarlinerenovations.com" class="hover:text-orange-light transition-colors">contact@cedarlinerenovations.com</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="text-[11px] uppercase tracking-[0.2em] text-white/35 mb-4">Connect</p>
+      <div class="flex gap-3">
+        <a href="#" class="w-9 h-9 rounded-[9px] border border-white/15 flex items-center justify-center hover:border-orange hover:text-orange-light transition-colors" aria-label="Facebook">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M13 22v-9h3l.5-4H13V7c0-1.1.3-2 2-2h1.5V1.3C16 1.2 14.9 1 13.6 1 10.9 1 9 2.7 9 5.7V9H6v4h3v9h4Z"/></svg>
+        </a>
+        <a href="#" class="w-9 h-9 rounded-[9px] border border-white/15 flex items-center justify-center hover:border-orange hover:text-orange-light transition-colors" aria-label="Instagram">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2.7 0 3.1 0 4.1.06 1.1.05 1.8.2 2.5.5.7.3 1.2.6 1.7 1.1.5.5.9 1 1.1 1.7.3.7.45 1.4.5 2.5.06 1 .06 1.4.06 4.1s0 3.1-.06 4.1c-.05 1.1-.2 1.8-.5 2.5-.3.7-.6 1.2-1.1 1.7-.5.5-1 .9-1.7 1.1-.7.3-1.4.45-2.5.5-1 .06-1.4.06-4.1.06s-3.1 0-4.1-.06c-1.1-.05-1.8-.2-2.5-.5-.7-.3-1.2-.6-1.7-1.1-.5-.5-.9-1-1.1-1.7-.3-.7-.45-1.4-.5-2.5C2 15.1 2 14.7 2 12s0-3.1.06-4.1c.05-1.1.2-1.8.5-2.5.3-.7.6-1.2 1.1-1.7.5-.5 1-.9 1.7-1.1.7-.3 1.4-.45 2.5-.5C8.9 2 9.3 2 12 2Zm0 3.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4Zm0 10.2a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm6.4-10.4a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0Z"/></svg>
+        </a>
+        <a href="#" class="w-9 h-9 rounded-[9px] border border-white/15 flex items-center justify-center hover:border-orange hover:text-orange-light transition-colors" aria-label="LinkedIn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.76-2.05 4.02 0 4.76 2.65 4.76 6.1V21h-4v-5.3c0-1.27-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21h-4V9Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <p class="text-center text-xs text-white/30 py-6 border-t border-white/10">© 2026 Cedarline Renovations. All rights reserved. <b>Designed by <big><a href="https://thebmubarak.github.io/portfolio">BMUBARAK</a></big></b></p>
+</footer>
+
+<!-- STICKY MOBILE CTA -->
+<div id="stickyBar" class="fixed bottom-0 inset-x-0 z-50 bg-dark-deep border-t border-white/10 px-5 py-4 flex items-center justify-between lg:hidden">
+  <span class="text-white text-sm font-medium">Ready to start?</span>
+  <a href="#contact" class="fr bg-orange text-white text-sm font-medium px-5 py-2.5 rounded-[9px]">Book a Call</a>
+</div>
+
+<script>
+  const nav = document.getElementById('nav');
+  const sticky = document.getElementById('stickyBar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('solid', window.scrollY > 60);
+    sticky.classList.toggle('show', window.scrollY > 700);
+  });
+
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  function closeMenu() {
+    menuBtn.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }
+  menuBtn.addEventListener('click', () => {
+    const isOpen = menuBtn.classList.toggle('open');
+    mobileMenu.classList.toggle('open', isOpen);
+    menuBtn.setAttribute('aria-expanded', String(isOpen));
+  });
+  document.querySelectorAll('.mobile-link').forEach(link => link.addEventListener('click', closeMenu));
+  window.addEventListener('resize', () => { if (window.innerWidth >= 1024) closeMenu(); });
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const revealEls = document.querySelectorAll('.reveal');
+  if (reduceMotion) {
+    revealEls.forEach(el => el.classList.add('is-visible'));
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('is-visible'); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => io.observe(el));
+  }
+
+  const counters = document.querySelectorAll('.counter');
+  const countIo = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.target, 10);
+        const duration = 1100;
+        const start = performance.now();
+        function tick(now) {
+          const p = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(eased * target);
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        countIo.unobserve(el);
+      }
+    });
+  }, { threshold: 0.4 });
+  counters.forEach(el => countIo.observe(el));
+
+  const baInput = document.getElementById('baInput');
+  const baBefore = document.getElementById('baBefore');
+  const baHandle = document.getElementById('baHandle');
+  function updateBA(val) {
+    baBefore.style.clipPath = `inset(0 ${100 - val}% 0 0)`;
+    baHandle.style.left = val + '%';
+  }
+  baInput.addEventListener('input', (e) => updateBA(e.target.value));
+  updateBA(50);
+
+  document.querySelectorAll('.faq-trigger').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const panel = item.querySelector('.faq-panel');
+      const isOpen = item.classList.contains('faq-open');
+      document.querySelectorAll('.faq-item.faq-open').forEach(openItem => {
+        if (openItem !== item) {
+          openItem.classList.remove('faq-open');
+          openItem.querySelector('.faq-panel').style.maxHeight = null;
+        }
+      });
+      item.classList.toggle('faq-open', !isOpen);
+      panel.style.maxHeight = !isOpen ? panel.scrollHeight + 'px' : null;
+    });
+  });
+
+  // Review carousel
+  const revTrack = document.getElementById('revTrackInner');
+  const revSlides = document.querySelectorAll('.rev-slide');
+  const revDotsWrap = document.getElementById('revDots');
+  const revPrev = document.getElementById('revPrev');
+  const revNext = document.getElementById('revNext');
+  let revIndex = 0;
+  revSlides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'rev-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Go to review ' + (i + 1));
+    dot.addEventListener('click', () => goToRev(i));
+    revDotsWrap.appendChild(dot);
+  });
+  function goToRev(i) {
+    revIndex = (i + revSlides.length) % revSlides.length;
+    revTrack.style.transform = `translateX(-${revIndex * 100}%)`;
+    document.querySelectorAll('.rev-dot').forEach((d, di) => d.classList.toggle('active', di === revIndex));
+  }
+  revPrev.addEventListener('click', () => goToRev(revIndex - 1));
+  revNext.addEventListener('click', () => goToRev(revIndex + 1));
+</script>
+</body>
+</html>
